@@ -91,5 +91,6 @@ int open_redirection(int redirection, char *file);
 void replace_arg_var(char **arr);
 void display_env(void);
 int builtin_env(char **arr);
+void print_exit_status(int stat);
 
 #endif

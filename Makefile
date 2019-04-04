@@ -20,6 +20,7 @@ SRCS	=	src/main.c			\
 		src/display_env.c		\
 		src/open_redirection.c		\
 		src/replace_arg_var.c		\
+		src/exit_status.c		\
 
 OBJS	=	$(SRCS:.c=.o)
 

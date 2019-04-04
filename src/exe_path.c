@@ -62,14 +62,12 @@ int exe_path(char *path, char **bin)
     char **args;
     int fd;
 
-/*    if (is_pipe(bin)) {
-        do_pipe(path, bin);
-        return (1);
-        }*/
     redirection = search_redirection(bin);
     if (redirection)
         args = keepnarg(bin);
     info_path = concat_path(info_path, path, bin[0]);
+    if (access(info_path, X_OK) == -1)
+        return (0);
     if (pid == 0) {
         if (redirection) {
             fd = open_redirection(redirection, file_redirect(bin));
@@ -87,8 +85,7 @@ int exe_path(char *path, char **bin)
         }
     } else {
         waitpid(pid, &stat, WUNTRACED);
-        if (stat == 139)
-            my_printf("Segmentation fault (core dumped)\n");
+        print_exit_status(stat);
         return_value = stat;
     }
     return (1);

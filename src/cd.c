@@ -50,6 +50,10 @@ void cd(char **arg)
                 my_puterr(arg[1]);
                 my_puterr(": No such file or directory.\n");
             }
+        else {
+            my_puterr(arg[1]);
+            my_puterr(": Not a directory.\n");
+        }
     }
     else
         last_path = tmp;

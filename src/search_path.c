@@ -16,6 +16,18 @@
 #include "my.h"
 #include "env.h"
 
+static void print_error(char *path, int stat)
+{
+    if (stat == 0) {
+        my_puterr(path);
+        my_puterr(": Command not found.\n");
+    }
+    else {
+        my_puterr(path);
+        my_puterr(": Permission denied.\n");
+    }
+}
+
 static int path_exist(char *currpath, char **bin)
 {
     char *tmp = malloc(4096);
@@ -30,6 +42,8 @@ static int path_exist(char *currpath, char **bin)
     fd = open(tmp, O_RDONLY);
     if (fd == -1)
         return (0);
+    else if (access(tmp, X_OK) == -1)
+        return (2);
     close(fd);
     return (1);
 }
@@ -66,14 +80,13 @@ void search_path(char **arr)
         }
     }
     getcwd(curr, PATH_MAX);
-    if (path_exist(curr, arr)) {
+    if ((stat = path_exist(curr, arr)) == 1) {
         stat = exe_path(curr, arr);
         if (stat == 1) {
             free(curr);
             return;
         }
     }
-    my_puterr(arr[0]);
-    my_puterr(": Command not found.\n");
+    print_error(arr[0], stat);
     return_value = 1;
 }
