@@ -45,7 +45,7 @@ void manage_command(void)
     display_prompt();
     str = gnl(0);
     if (!str)
-        exit(return_value);
+        exit(0);
     stat = builtin(str);
     if (stat)
         return;

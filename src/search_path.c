@@ -8,11 +8,31 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <dirent.h>
 #include <limits.h>
 #include <stdlib.h>
 #include "my.h"
 #include "env.h"
+
+static int path_exist(char *currpath, char **bin)
+{
+    char *tmp = malloc(4096);
+    int fd;
+
+    if (!tmp)
+        exit(0);
+    tmp = my_strcpy(tmp, currpath);
+    if (tmp[my_strlen(tmp) - 1] != '/')
+        tmp = my_strcat(tmp, "/");
+    tmp = my_strcat(tmp, bin[0]);
+    fd = open(tmp, O_RDONLY);
+    if (fd == -1)
+        return (0);
+    close(fd);
+    return (1);
+}
 
 int search_bin(char *path, char **bin)
 {
@@ -46,11 +66,14 @@ void search_path(char **arr)
         }
     }
     getcwd(curr, PATH_MAX);
-    stat = exe_path(curr, arr);
-    if (stat == 1) {
-        free(curr);
-        return;
+    if (path_exist(curr, arr)) {
+        stat = exe_path(curr, arr);
+        if (stat == 1) {
+            free(curr);
+            return;
+        }
     }
-    my_printf("%s: command not found.\n", arr[0]);
+    my_puterr(arr[0]);
+    my_puterr(": Command not found.\n");
     return_value = 1;
 }
