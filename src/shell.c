@@ -21,7 +21,7 @@ int builtin(char *str)
         return (1);
     }
     if (my_strcomp(arr[0], "cd")) {
-        cd(arr[1]);
+        cd(arr);
         return_value = 0;
         return (1);
     }

@@ -81,7 +81,7 @@ void shell(void);
 void display_prompt(void);
 void manage_command(void);
 int builtin(char *str);
-void cd(char *arg);
+void cd(char **arg);
 void set_paths(char **env);
 void search_path(char **arr);
 int exe_path(char *path, char **bin);

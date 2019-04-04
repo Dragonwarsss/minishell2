@@ -45,6 +45,7 @@ int main(__attribute__((unused))int argc,
 __attribute__((unused))char **argv, char **env)
 {
     signal(SIGINT, random_func);
+    last_path = malloc(4096);
     var = malloc(sizeof(var_t));
     var[0].name = NULL;
     return_value = 0;
