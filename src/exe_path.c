@@ -85,7 +85,15 @@ int exe_path(char *path, char **bin)
         }
     } else {
         waitpid(pid, &stat, WUNTRACED);
-        print_exit_status(stat);
+        if (WIFSIGNALED(stat)) {
+            print_exit_status(stat);
+            #ifdef WCOREDUMP
+            if (WCOREDUMP(stat) == 128)
+                my_puterr(" (core dumped)\n");
+            else
+                my_puterr("\n");
+            #endif
+        }
         return_value = stat;
     }
     return (1);
