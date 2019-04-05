@@ -13,12 +13,15 @@
 #include <dirent.h>
 #include <limits.h>
 #include <stdlib.h>
+#include <errno.h>
+#include <string.h>
 #include "my.h"
 #include "env.h"
 
-static void print_error(char *path, int stat)
+static void print_error(char *path, int stat, char *curr)
 {
     if (stat == 0) {
+
         my_puterr(path);
         my_puterr(": Command not found.\n");
     }
@@ -32,13 +35,16 @@ static int path_exist(char *currpath, char **bin)
 {
     char *tmp = malloc(4096);
     int fd;
+    DIR *dir;
 
     if (!tmp)
         exit(0);
-    tmp = my_strcpy(tmp, currpath);
-    if (tmp[my_strlen(tmp) - 1] != '/')
-        tmp = my_strcat(tmp, "/");
-    tmp = my_strcat(tmp, bin[0]);
+    tmp = concat_path(tmp, currpath, bin[0]);
+    dir = opendir(tmp);
+    if (dir) {
+        closedir(dir);
+        return (2);
+    }
     fd = open(tmp, O_RDONLY);
     if (fd == -1)
         return (0);
@@ -87,6 +93,6 @@ void search_path(char **arr)
             return;
         }
     }
-    print_error(arr[0], stat);
+    print_error(arr[0], stat, curr);
     return_value = 1;
 }

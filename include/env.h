@@ -92,5 +92,6 @@ void replace_arg_var(char **arr);
 void display_env(void);
 int builtin_env(char **arr);
 void print_exit_status(int stat);
+char *concat_path(char *info_path, char *path, char *bin);
 
 #endif
