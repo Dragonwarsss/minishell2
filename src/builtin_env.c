@@ -44,5 +44,8 @@ int builtin_env(char **arr)
             return (1);
         }
     }
+    if (my_strcomp(arr[0], "unsetenv")) {
+        return (1);
+    }
     return (0);
 }

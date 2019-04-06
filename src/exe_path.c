@@ -86,13 +86,8 @@ int exe_path(char *path, char **bin)
     } else {
         waitpid(pid, &stat, WUNTRACED);
         if (WIFSIGNALED(stat)) {
-            print_exit_status(stat);
-            #ifdef WCOREDUMP
-            if (WCOREDUMP(stat) == 128)
-                my_puterr(" (core dumped)\n");
-            else
-                my_puterr("\n");
-            #endif
+            char *str = strsignal(WTERMSIG(stat));
+            printf("%s\n", str);
         }
         return_value = stat;
     }

@@ -93,5 +93,11 @@ void display_env(void);
 int builtin_env(char **arr);
 void print_exit_status(int stat);
 char *concat_path(char *info_path, char *path, char *bin);
+int only_pipe(char *str);
+char **keep_correct_args(char **args, int i);
+char **keep_correct_sep(char **args);
+int execute_pipe(char *str);
+int is_sep(char *str);
+char *search_exe_path(char *bin);
 
 #endif
