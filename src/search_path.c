@@ -18,10 +18,9 @@
 #include "my.h"
 #include "env.h"
 
-static void print_error(char *path, int stat, char *curr)
+void print_error(char *path, int stat)
 {
     if (stat == 0) {
-
         my_puterr(path);
         my_puterr(": Command not found.\n");
     }
@@ -93,6 +92,5 @@ void search_path(char **arr)
             return;
         }
     }
-    print_error(arr[0], stat, curr);
-    return_value = 1;
+    trypath(arr, stat);
 }

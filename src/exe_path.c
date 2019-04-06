@@ -5,6 +5,7 @@
 ** exe_path
 */
 
+#include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -76,18 +77,24 @@ int exe_path(char *path, char **bin)
             close(fd);
             stat = execve(info_path, args, envp);
             if (stat == -1)
-                return (0);
+                exit(0);
         }
         else {
             stat = execve(info_path, bin, envp);
-            if (stat == -1)
+            if (stat == -1) {
+                my_puterr(bin[0]);
+                my_puterr(": Exec format error. Wrong Architecture.\n");
+                exit(0);
                 return (0);
+            }
         }
     } else {
         waitpid(pid, &stat, WUNTRACED);
         if (WIFSIGNALED(stat)) {
-            char *str = strsignal(WTERMSIG(stat));
-            printf("%s\n", str);
+            print_exit_status((char*)strsignal(WTERMSIG(stat)));
+            if (WCOREDUMP(stat))
+                my_puterr(" (core dumped)");
+            my_puterr("\n");
         }
         return_value = stat;
     }

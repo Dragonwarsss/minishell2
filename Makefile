@@ -5,7 +5,7 @@
 ## make
 ##
 
-CC	=	gcc -Iinclude -g3
+CC	=	gcc -Iinclude
 
 NAME	=	mysh
 
@@ -21,13 +21,9 @@ SRCS	=	src/main.c			\
 		src/open_redirection.c		\
 		src/replace_arg_var.c		\
 		src/exit_status.c		\
-		src/execute_pipe.c		\
-		src/only_pipe.c			\
-		src/keep_correct_args.c		\
-		src/keep_correct_sep.c		\
-		src/is_sep.c			\
-		src/exe_path_pipe.c		\
-		src/search_exe_path.c		\
+		src/try_exe.c			\
+		src/trypath.c			\
+		src/cd_check_wrong.c		\
 
 OBJS	=	$(SRCS:.c=.o)
 

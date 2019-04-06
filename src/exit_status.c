@@ -8,14 +8,10 @@
 #include <stdio.h>
 #include "my.h"
 
-void print_exit_status(int stat)
+void print_exit_status(char *str)
 {
-    if (stat == 139) {
-        my_puterr("Segmentation fault");
-        my_printf("Segmentation fault\n");
-    }
-    if (stat == 136) {
+    if (my_strcomp(str, "Floating point exception"))
         my_puterr("Floating exception");
-        my_printf("Floating exception\n");
-    }
+    if (my_strcomp(str, "Segmentation fault"))
+        my_puterr("Segmentation fault");
 }
