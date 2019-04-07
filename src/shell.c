@@ -50,10 +50,12 @@ void manage_command(void)
     if (stat)
         return;
     arr = my_str_to_word_array(str);
-    if (check_pipe_or_semi(str) == 1)
+    if (check_pipe_or_semi(str) == 1 && envp)
         return;
-    else if (arr[0])
+    else if (arr[0] && envp)
         search_path(arr);
+    if (!envp)
+        print_error(arr[0], 0);
     free(str);
 }
 

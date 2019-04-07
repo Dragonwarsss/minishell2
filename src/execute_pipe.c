@@ -14,7 +14,7 @@
 #include "my.h"
 #include "env.h"
 
-int do_pipe(char ***args)
+void do_pipe(char ***args)
 {
     int pipefd[2];
     int pid;
@@ -36,20 +36,15 @@ int do_pipe(char ***args)
         waitpid(-1, &stat, 0);
         if (stat2 == -1)
             exit(84);
-        return (pid);
     }
-    return (0);
 }
 
 int execute_pipe(char ***args)
 {
     int pid = fork();
-    int stat;
-    int pid2;
-    int wpid;
 
     if (pid == 0)
-        pid2 = do_pipe(args);
+        do_pipe(args);
     else {
         for (int i = 0; i != 10000000; i += 1);
         return (0);

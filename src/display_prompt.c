@@ -16,6 +16,10 @@ void copy_home(char **env)
     int i;
     char *str;
 
+    if (!env[0]) {
+        home = "/";
+        return;
+    }
     for (i = 0; env[i]; i += 1)
         if (my_strncomp("HOME=", env[i], 5))
             str = my_strdup(env[i]);

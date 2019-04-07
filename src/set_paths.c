@@ -12,6 +12,8 @@
 
 void set_paths(char **env)
 {
+    if (!env[0])
+        return (NULL);
     for (int i = 0; env[i]; i += 1)
         if (my_strncomp(env[i], "PATH=", 5))
             paths = my_str_to_word_array(env[i]);

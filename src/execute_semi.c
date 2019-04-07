@@ -10,7 +10,6 @@
 
 void execute_semi(char ***args)
 {
-    int stat;
     char *bin;
 
     while (*args != NULL) {

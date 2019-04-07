@@ -12,6 +12,8 @@ void display_env(void)
 {
     int i;
 
+    if (!envp)
+        return;
     for (i = 0; envp[i]; i += 1)
         my_printf("%s\n", envp[i]);
     for (i = 0; var[i].name; i += 1) {
