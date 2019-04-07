@@ -40,15 +40,19 @@ void display_env(void);
 int builtin_env(char **arr);
 void print_exit_status(char *str);
 char *concat_path(char *info_path, char *path, char *bin);
-int only_pipe(char *str);
+int only_pipe(char **sep);
 char **keep_correct_args(char **args, int i);
 char **keep_correct_sep(char **args);
-int execute_pipe(char *str);
+int execute_pipe(char ***args);
 int is_sep(char *str);
 char *search_exe_path(char *bin);
 void trypath(char **arr, int stat);
 void print_error(char *path, int stat);
 int try_exe(char *path, char **bin);
 void cd_check_wrong(int stat, char **arg, char *tmp);
+int check_pipe_or_semi(char *str);
+char **keep_correct_sep(char **args);
+int only_semi(char **sep);
+void execute_semi(char ***args);
 
 #endif

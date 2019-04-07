@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2019
-** minishell
+** minishell2
 ** File description:
 ** display_env
 */

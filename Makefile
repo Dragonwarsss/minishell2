@@ -24,6 +24,15 @@ SRCS	=	src/main.c			\
 		src/try_exe.c			\
 		src/trypath.c			\
 		src/cd_check_wrong.c		\
+		src/check_pipe_or_semi.c	\
+		src/keep_correct_args.c		\
+		src/keep_correct_sep.c		\
+		src/is_sep.c			\
+		src/only_semi.c			\
+		src/only_pipe.c			\
+		src/execute_semi.c		\
+		src/search_exe_path.c		\
+		src/execute_pipe.c		\
 
 OBJS	=	$(SRCS:.c=.o)
 

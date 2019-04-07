@@ -5,6 +5,8 @@
 ** execute pipe
 */
 
+#include <sys/types.h>
+#include <wait.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -12,22 +14,46 @@
 #include "my.h"
 #include "env.h"
 
-int execute_pipe(char *str)
+int do_pipe(char ***args)
 {
-    char ***mult_args;
-    char **tab;
-    char *copy = my_strdup(str);
-    int many_sep = 0;
+    int pipefd[2];
+    int pid;
+    int stat;
+    int stat2;
 
-    tab = my_str_to_word_array(copy);
-    for (int i = 0; copy[i]; i += 1)
-        if (copy[i] == '|')
-            many_sep += 1;
-    mult_args = malloc(sizeof(char**) * (many_sep + 2));
-    mult_args[many_sep + 1] = NULL;
-    for (int i = 0; i != many_sep + 1; i += 1) {
-        mult_args[i] = my_str_to_word_array(copy);
-        mult_args[i] = keep_correct_args(mult_args[i], i);
+    pipe(pipefd);
+    pid = fork();
+    if (pid == 0) {
+        dup2(pipefd[0], 0);
+        close(pipefd[1]);
+        stat = execve(search_exe_path(args[1][0]), args[1], envp);
+        if (stat == -1)
+            exit(84);
+    } else {
+        dup2(pipefd[1], 1);
+        close(pipefd[0]);
+        stat2 = execve(search_exe_path(args[0][0]), args[0], envp);
+        waitpid(-1, &stat, 0);
+        if (stat2 == -1)
+            exit(84);
+        return (pid);
     }
-    exe_path_pipe(mult_args);
+    return (0);
+}
+
+int execute_pipe(char ***args)
+{
+    int pid = fork();
+    int stat;
+    int pid2;
+    int wpid;
+
+    if (pid == 0)
+        pid2 = do_pipe(args);
+    else {
+        for (int i = 0; i != 10000000; i += 1);
+        return (0);
+    }
+
+    return (0);
 }

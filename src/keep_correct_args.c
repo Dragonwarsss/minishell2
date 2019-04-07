@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2019
-**
+** minishell2
 ** File description:
-**
+** keep correct args
 */
 
 #include <stdio.h>
@@ -30,12 +30,19 @@ char **keep_correct_args(char **args, int i)
 {
     char *tmp = malloc(4096);
     int index = search_sep_index(args, i);
+    int is_first = 0;
 
     if (!tmp)
         exit(84);
     for (int j = index; is_sep(args[j]) == 0 && args[j]; j += 1) {
-        tmp = my_strcat(tmp, args[j]);
-        tmp = my_strcat(tmp, " ");
+        if (is_first == 0) {
+            tmp = my_strcpy(tmp, args[j]);
+            tmp = my_strcat(tmp, " ");
+            is_first += 1;
+        } else {
+            tmp = my_strcat(tmp, args[j]);
+            tmp = my_strcat(tmp, " ");
+        }
         if (!args[j + 1])
             break;
     }
