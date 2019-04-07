@@ -10,6 +10,7 @@ CC	=	gcc -Iinclude
 NAME	=	mysh
 
 SRCS	=	src/main.c			\
+		src/copy.c			\
 		src/shell.c			\
 		src/display_prompt.c		\
 		src/cd.c			\

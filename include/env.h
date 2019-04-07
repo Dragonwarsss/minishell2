@@ -54,5 +54,8 @@ int check_pipe_or_semi(char *str);
 char **keep_correct_sep(char **args);
 int only_semi(char **sep);
 void execute_semi(char ***args);
+void random_func(int sig);
+void copy_user(char **env);
+void copy_env(char **env);
 
 #endif

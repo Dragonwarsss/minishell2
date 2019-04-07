@@ -11,7 +11,7 @@
 
 static char ** change_if_same(char **arr, int i)
 {
-    char *info;
+    char *info = malloc(4096);
 
     info = my_strcpynjump(arr[i], 1);
     for (int j = 0; var[j].name; j += 1) {
